@@ -1,470 +1,307 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>برنامج تسيير المراسلة والتسجيل</title>
-<style>
-:root{--bg:#f6f3ee;--card:#fff;--ink:#1f2a37;--mut:#6b7280;--line:#e3ddd2;--pri:#c2570c;--priInk:#fff;--ok:#cfe9b5;--warn:#fff27a;--head:#c2570c;--alt:#fcefe6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17191d;--card:#22252b;--ink:#eceff4;--mut:#9aa3b2;--line:#363a43;--pri:#ee8a46;--priInk:#1a1204;--ok:#3f6b2b;--warn:#7a6c00;--head:#8a3d08;--alt:#2a2724}}
-:root[data-theme="dark"]{--bg:#17191d;--card:#22252b;--ink:#eceff4;--mut:#9aa3b2;--line:#363a43;--pri:#ee8a46;--priInk:#1a1204;--ok:#3f6b2b;--warn:#7a6c00;--head:#8a3d08;--alt:#2a2724}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Tajawal,Tahoma,Arial,sans-serif;padding:16px}
-h1{font-size:24px;margin:0 0 4px}
-.sub{color:var(--mut);margin:0 0 16px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
-.stat b{display:block;font-size:22px}.stat span{color:var(--mut);font-size:13px}
-.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
-input,select,textarea,button{font:inherit;color:var(--ink)}
-input,select,textarea{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:7px 10px;min-width:0}
-button{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer}
-button:hover{border-color:var(--pri)}
-button.p{background:var(--pri);color:var(--priInk);border-color:var(--pri);font-weight:700}
-button.s{padding:3px 8px;font-size:13px}
-:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
-.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
-table{border-collapse:collapse;width:100%;min-width:1000px;text-align:center}
-th{background:var(--head);color:#fff;padding:9px 8px;position:sticky;top:0;white-space:nowrap;cursor:pointer}
-td{padding:7px 8px;border-top:1px solid var(--line)}
-tbody tr:nth-child(even){background:var(--alt)}
-td.n{font-weight:700;background:var(--warn)}
-td.ok{background:var(--ok)}td.wr{background:var(--warn)}
-.debt{font-weight:700;color:#b42318}
-.act{white-space:nowrap}
-dialog{border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:min(560px,94vw);padding:18px}
-dialog::backdrop{background:rgba(0,0,0,.45)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.grid label{display:flex;flex-direction:column;font-size:13px;color:var(--mut);gap:3px}
-.grid input,.grid select{color:var(--ink);font-size:15px}
-.full{grid-column:1/-1}
-textarea{width:100%;min-height:190px;direction:ltr;font-family:monospace;font-size:12px}
-.foot{display:flex;gap:8px;justify-content:flex-start;margin-top:14px;flex-wrap:wrap}
-.empty{padding:30px;color:var(--mut)}
-@media(max-width:520px){.grid{grid-template-columns:1fr}}
-table{min-width:1000px}
-dialog{max-height:92vh}
-.pf{display:grid;gap:12px}
-.sec{border:1px solid var(--line);border-radius:8px;padding:12px}
-.sec h4{margin:0 0 8px;font-size:15px}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0}
-.row .lb{flex:1 1 240px}
-.tag{display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;background:var(--line)}
-.tag.g{background:var(--ok)}.tag.r{background:#f6c9c4;color:#7a1a10}
-.mt{min-width:0;width:100%}
-.mt tr.best td{background:var(--ok)}
-.mt input{width:100%}
-#sheet{display:none}
-.doc{background:#fff;color:#000;font-family:Tajawal,Tahoma,serif;padding:14mm;border:2px solid #000;line-height:1.7;text-align:right}
-.doc table{width:100%;min-width:0;border-collapse:collapse;margin:8px 0}
-.doc td,.doc th{border:1px solid #000;padding:5px 8px;text-align:center;color:#000}
-.doc th{background:#eee;position:static;cursor:default}
-.doc tbody tr:nth-child(even){background:#fff}
-.doc h3{margin:14px 0 4px;font-size:16px}
-@media print{@page{size:A4;margin:8mm}body{background:#fff!important;padding:0!important}body>*:not(#sheet){display:none!important}#sheet{display:block!important}}
-.cards{display:grid;grid-template-columns:repeat(2,90mm);justify-content:center;gap:0;background:#fff}
-.card{width:90mm;height:50mm;box-sizing:border-box;border:.25mm dashed #888;background:#fff;color:#000;overflow:hidden;font-family:Tajawal,Tahoma,sans-serif;display:flex;flex-direction:column;text-align:right;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.ch{background:#c2570c;color:#fff;padding:1.2mm 3mm;display:flex;justify-content:space-between;font-size:9pt}
-.cn{font-weight:700;font-size:13pt;padding:1.5mm 3mm 0;line-height:1.3}
-.cl{font-size:9pt;padding:0 3mm;color:#444}
-.card .ci{border-collapse:collapse;margin:1mm 3mm;width:auto;min-width:0;font-size:8.5pt}
-.card .ci td{border:0;padding:.3mm 0 .3mm 3mm;background:none;color:#000;text-align:right}
-.card .ci tbody tr:nth-child(n){background:#fff}
-.cf{margin-top:auto;border-top:.2mm solid #c2570c;padding:1mm 3mm;font-size:8.5pt;text-align:center;font-weight:700}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyber Tech | خدمات رقمية وبحوث وبرمجة في قايس، خنشلة</title>
+<meta name="description" content="مقهى إنترنت في قايس، خنشلة: بحوث، مذكرات تخرج، تسجيلات رقمية، برمجة، صيانة وتصميم. اطلب خدمتك من الموقع في أي وقت.">
+<meta property="og:title" content="Cyber Tech | خدمات رقمية وبحوث وبرمجة في قايس، خنشلة">
+<meta property="og:description" content="مقهى إنترنت في قايس، خنشلة: بحوث، مذكرات تخرج، تسجيلات رقمية، برمجة، صيانة وتصميم. اطلب خدمتك من الموقع في أي وقت.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_DZ">
+<meta name="theme-color" content="#0B2624">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "Cyber Tech", "description": "مقهى إنترنت وخدمات رقمية في قايس، ولاية خنشلة.", "telephone": "+213654432520", "address": {"@type": "PostalAddress", "addressLocality": "قايس", "addressRegion": "خنشلة", "addressCountry": "DZ"}, "openingHours": "Mo-Su 08:00-16:00"}</script>
 </head>
-<body>
-<h1>برنامج تسيير المراسلة والتسجيل</h1>
-<p class="sub">إدارة بيانات المسجلين، متابعة الدفعات، وإرسال الرسائل عبر واتساب.</p>
+<body data-page="home">
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+<div class="notice" id="notice" hidden></div>
+<header class="top" id="top">
+  <div class="wrap">
+    <div class="pillbar">
+      <a class="brand" href="index.html" aria-label="Cyber Tech، الصفحة الرئيسية"><span class="brand__mark"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path class="m1" d="M12 13.500l7.500 6.500-7.500 6.500"/><path class="m2" d="M22.500 27.500h6.500"/></svg></span><span class="brand__name">Cyber<b>Tech</b></span></a>
+      <nav class="nav" id="nav" aria-label="القائمة الرئيسية">
+        <div class="dd" id="dd">
+          <button class="nav__link dd__btn" id="ddBtn" type="button" aria-expanded="false" aria-controls="ddPanel">الخدمات<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="dd__panel" id="ddPanel">
+          <a class="dd__item" data-cat="digital" data-filter="digital" href="index.html?cat=digital#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.6 2.6 14.4 0 17M12 3.5c-2.6 2.6-2.6 14.4 0 17"/></svg></span>
+            <span><strong>التسجيلات والخدمات الرقمية</strong><small>تسجيلات، تحميلات واستشارات</small></span>
+          </a>
+          <a class="dd__item" data-cat="study" data-filter="study" href="index.html?cat=study#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg></span>
+            <span><strong>الدراسة والبحوث</strong><small>بحوث، عروض، مذكرات وتقارير</small></span>
+          </a>
+          <a class="dd__item" data-cat="dev" data-filter="dev" href="index.html?cat=dev#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7.5L4 12l4.5 4.5M15.5 7.5L20 12l-4.5 4.5M13.5 5l-3 14"/></svg></span>
+            <span><strong>البرمجة والويب</strong><small>برامج التخرج وتطبيقات الويب</small></span>
+          </a>
+          <a class="dd__item" data-cat="pc" data-filter="pc" href="index.html?cat=pc#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="11.5" rx="2"/><path d="M9 20h6M12 16v4"/></svg></span>
+            <span><strong>الحاسوب</strong><small>تثبيت وصيانة الحواسيب</small></span>
+          </a>
+          <a class="dd__item" data-cat="design" data-filter="design" href="index.html?cat=design#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3"/></svg></span>
+            <span><strong>التصميم</strong><small>إعلانات، ملصقات وبطاقات</small></span>
+          </a>
+            <a class="dd__all" href="index.html#services">كل الخدمات<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+          </div>
+        </div>
+        <a class="nav__link" href="index.html#how">كيف نعمل</a>
+        <a class="nav__link" href="index.html#faq">الأسئلة الشائعة</a>
+        <a class="nav__link" href="index.html#contact">اتصل بنا</a>
+        <div class="nav__foot">
+          <a class="btn btn--ghost" href="tel:+213654432520"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2.5 2.5 0 0 1-2.5 2.5A15 15 0 0 1 4 6a2.5 2.5 0 0 1 2.5-2.5z"/></svg>اتصال</a>
+          <a class="btn btn--wa" href="https://wa.me/213654432520" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a8 8 0 0 0-6.9 12L4 20l4.1-1.1A8 8 0 1 0 12 4z"/></svg>واتساب</a>
+        </div>
+      </nav>
+      <div class="pillbar__tools">
+        <a class="btn btn--cta btn--sm" href="order.html">اطلب خدمة</a>
+        <button class="iconbtn menu-btn" id="menuBtn" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+    </div>
+  </div>
+</header>
 
-<div class="stats">
-  <div class="stat"><b id="sCount">0</b><span>عدد المسجلين</span></div>
-  <div class="stat"><b id="sPaid">0</b><span>مجموع المدفوع</span></div>
-  <div class="stat"><b id="sRest">0</b><span>مجموع المتبقي</span></div>
-  <div class="stat"><b id="sDebt">0</b><span>عليهم متبقي</span></div>
-  <div class="stat"><b id="sLog">0</b><span>مجموع الدخولات</span></div>
-  <div class="stat"><b id="sOk">0</b><span>مقبول</span></div>
-  <div class="stat"><b id="sRep">0</b><span>معيد</span></div>
-</div>
+<main id="main">
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__panel">
+      <div class="hero__text">
+        <p class="pill"><span class="pulse"></span>الطلبات مفتوحة على مدار الساعة</p>
+        <h1>كل خدماتك الرقمية، تطلبها من هاتفك وتستلمها من قايس.</h1>
+        <p class="lead">Cyber Tech مقهى إنترنت في خنشلة. بحوث، مذكرات تخرج، تسجيلات رقمية، برمجة، صيانة وتصميم: اختر ما تحتاجه، ونتصل بك لنؤكد التفاصيل.</p>
+        <div class="actions">
+          <a class="btn btn--cta btn--lg" href="order.html">اطلب خدمة<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+          <a class="btn btn--line btn--lg" href="#services">تصفح الخدمات</a>
+        </div>
+      </div>
 
-<div class="bar">
-  <input id="q" type="search" placeholder="بحث بالاسم أو الهاتف أو المستوى" size="28">
-  <select id="fType"><option value="">كل الأنواع</option></select>
-  <select id="fStatus"><option value="">كل الحالات</option><option value="مؤكد">مؤكد</option><option value="__none">غير مؤكد</option></select>
-  <select id="fDebt"><option value="">الدفع: الكل</option><option value="debt">عليه متبقي</option><option value="clear">مسدد</option></select>
-  <button class="p" id="bAdd">+ إضافة مسجل</button>
-  <button id="bMsg">نص الرسالة</button>
-  <button id="bCards">طباعة البطاقات</button>
-  <button id="bSet">الإعدادات</button>
-  <button id="bFolder" class="p">تفعيل كشف الملفات (مرة واحدة)</button>
-  <button id="bSaveF" class="p">حفظ نسخة في ملف</button>
-  <button id="bOpenF">فتح ملف بيانات</button>
-  <button id="bLink">ربط بملف (حفظ تلقائي)</button>
-  <button id="bXml">XML / نسخ احتياطي</button>
-  <button id="bTheme">الوضع الليلي</button>
-</div>
+      <div class="ticket" id="ticket">
+        <div class="ticket__top">
+          <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h13A1.5 1.5 0 0 1 20 8.5V10a2 2 0 0 0 0 4v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 15.5V14a2 2 0 0 0 0-4z"/><path d="M14.5 7.5v9" stroke-dasharray="1.5 2"/></svg></span>
+          <div><strong>تذكرة طلب</strong><small>ماذا تحتاج اليوم؟</small></div>
+        </div>
+        <div class="chips" role="group" aria-label="اختر الخدمة">
+        <button class="chip" type="button" data-id="research" data-name="البحوث لكل الأطوار" data-cat="study" aria-pressed="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg>البحوث</button>
+        <button class="chip" type="button" data-id="thesis" data-name="مذكرات التخرج" data-cat="study" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9.5L12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5v4.2c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.2M21.5 9.5v5"/></svg>مذكرة التخرج</button>
+        <button class="chip" type="button" data-id="presentations" data-name="العروض التقديمية" data-cat="study" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="11" rx="2"/><path d="M12 15.5V19M8.5 20.5L12 19l3.5 1.5M8.5 12v-1.5M12 12V8M15.5 12V9.5"/></svg>عرض تقديمي</button>
+        <button class="chip" type="button" data-id="registrations" data-name="التسجيلات الرقمية" data-cat="digital" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="8" r="3.3"/><path d="M3.5 19.5c.6-3.2 3-5 6-5s5.4 1.8 6 5M18.5 7.5v6M15.5 10.5h6"/></svg>تسجيل رقمي</button>
+        <button class="chip" type="button" data-id="distance" data-name="حجز الدراسة بالمراسلة" data-cat="digital" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4.5 7.5l7.5 6 7.5-6"/></svg>الدراسة بالمراسلة</button>
+        <button class="chip" type="button" data-id="webapps" data-name="تطبيقات الويب" data-cat="dev" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M3.5 9h17M6.5 6.8h.01M9 6.8h.01M10.5 12.3l-2 2 2 2M13.5 12.3l2 2-2 2"/></svg>تطبيق ويب</button>
+        <button class="chip" type="button" data-id="repair" data-name="صيانة الحواسيب" data-cat="pc" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><rect x="10.2" y="10.2" width="3.6" height="3.6" rx=".6"/><path d="M10 3.5V7M14 3.5V7M10 17v3.5M14 17v3.5M3.5 10H7M3.5 14H7M17 10h3.5M17 14h3.5"/></svg>صيانة حاسوب</button>
+        <button class="chip" type="button" data-id="design" data-name="الإعلانات والملصقات والبطاقات" data-cat="design" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="8.8" cy="9.8" r="1.6"/><path d="M4 17l4.5-4 3.5 3 3-2.5 5 4.5"/></svg>تصميم</button>
+        </div>
+        <div class="ticket__cut" aria-hidden="true"></div>
+        <div class="ticket__bottom">
+          <div><small>الخدمة المختارة</small><strong id="ticketName">البحوث لكل الأطوار</strong></div>
+          <a class="btn btn--cta" id="ticketGo" href="order.html?service=research">تابع الطلب<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
 
-<div id="fsInfo" class="sub" style="margin:-4px 0 10px">أزرار «فتح» تعمل مباشرة من مجلدات البرنامج (اسم الملف = رقم المتعلم، مثل 1.pdf). لمعرفة الملفات الموجودة فعلا اضغط «تفعيل كشف الملفات» مرة واحدة.</div>
-<div class="wrap"><table>
-  <thead><tr id="thr"></tr></thead>
-  <tbody id="tb"></tbody>
-</table><div id="empty" class="empty" hidden>لا توجد نتائج. غيّر البحث أو أضف مسجلا جديدا.</div></div>
+    <ul class="facts-strip">
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span><strong>8:00 – 16:00</strong>أوقات المحل</span></li>
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3.5L5.5 13.5H12l-1 7 7.5-10H12z"/></svg><span><strong>24/24</strong>استقبال الطلبات</span></li>
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><span><strong>13 خدمة</strong>في مكان واحد</span></li>
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg><span><strong>قايس، خنشلة</strong>مقابل متوسطة عروج</span></li>
+    </ul>
+  </div>
+</section>
 
-<dialog id="dPf" style="width:min(780px,96vw)"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">إجراءات المتعلم</h3><button id="pfClose">إغلاق</button></div><div id="pfBody" style="margin-top:12px"></div></dialog>
-<dialog id="dPrev" style="width:min(820px,96vw)"><div class="foot" style="margin:0 0 10px"><button class="p" id="pPrint">طباعة</button><button id="pClose">إغلاق</button></div><div class="doc" id="prevBody"></div></dialog>
-<dialog id="dSet"><h3 style="margin-top:0">الإعدادات</h3><div class="grid" id="setGrid"></div><div class="foot"><button class="p" id="sSave">حفظ</button><button id="sClose">إلغاء</button></div></dialog>
-<dialog id="dCards" style="width:min(780px,96vw)"><div class="foot" style="margin:0 0 10px;align-items:center"><button class="p" id="cPrint">طباعة كل البطاقات</button><label><input type="checkbox" id="cOnly"> المعروضين في الجدول فقط</label><button id="cClose">إغلاق</button></div><div id="cardsBody"></div></dialog>
-<div id="sheet"></div>
-<input type="file" id="fOpen" accept=".json,.xml" hidden>
-<dialog id="dForm"><h3 id="dTitle" style="margin-top:0"></h3><div class="grid" id="fGrid"></div>
-  <div class="foot"><button class="p" id="fSave">حفظ</button><button id="fCancel">إلغاء</button></div></dialog>
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sec__head ">
+      <h2>ما الذي ننجزه لك</h2>
+      <p class="lead">اضغط على أي خدمة لتفتح الاستمارة وهي مختارة.</p>
+    </div>
+    <div class="tabs" id="tabs" role="group" aria-label="تصفية الخدمات">
+      <button class="tab" type="button" data-filter="all" aria-pressed="true">الكل</button>
+      <button class="tab" type="button" data-filter="digital" aria-pressed="false">رقمية</button>
+      <button class="tab" type="button" data-filter="study" aria-pressed="false">الدراسة</button>
+      <button class="tab" type="button" data-filter="dev" aria-pressed="false">البرمجة</button>
+      <button class="tab" type="button" data-filter="pc" aria-pressed="false">الحاسوب</button>
+      <button class="tab" type="button" data-filter="design" aria-pressed="false">التصميم</button>
+    </div>
+    <div class="svcs" id="svcs">
+        <a class="svc" id="registrations" data-cat="digital" href="order.html?service=registrations">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="8" r="3.3"/><path d="M3.5 19.5c.6-3.2 3-5 6-5s5.4 1.8 6 5M18.5 7.5v6M15.5 10.5h6"/></svg></span>
+          <span class="svc__txt"><strong>التسجيلات الرقمية</strong><span>التسجيلات الرقمية في كل المنصات والمواقع الإلكترونية.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="distance" data-cat="digital" href="order.html?service=distance">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4.5 7.5l7.5 6 7.5-6"/></svg></span>
+          <span class="svc__txt"><strong>حجز الدراسة بالمراسلة</strong><span>حجز مكانك والتسجيل في الدراسة بالمراسلة (التعليم عن بعد).</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="downloads" data-cat="digital" href="order.html?service=downloads">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10.5M7.5 10.5L12 15l4.5-4.5M4.5 16.5v1.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5"/></svg></span>
+          <span class="svc__txt"><strong>التحميلات</strong><span>تحميل الملفات والبرامج التي تحتاجها.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="consulting" data-cat="digital" href="order.html?service=consulting">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 5h13a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5.5L8.5 20.5V17h-3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M8.5 9.5h7M8.5 12.5h4.5"/></svg></span>
+          <span class="svc__txt"><strong>استشارات رقمية</strong><span>نوجّهك ونجيب عن أسئلتك في المجال الرقمي.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="research" data-cat="study" href="order.html?service=research">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg></span>
+          <span class="svc__txt"><strong>البحوث لكل الأطوار</strong><span>إنجاز البحوث لكل الأطوار: ابتدائي، متوسط، ثانوي، جامعي وتكوين.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="presentations" data-cat="study" href="order.html?service=presentations">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="11" rx="2"/><path d="M12 15.5V19M8.5 20.5L12 19l3.5 1.5M8.5 12v-1.5M12 12V8M15.5 12V9.5"/></svg></span>
+          <span class="svc__txt"><strong>العروض التقديمية</strong><span>إنشاء عروض تقديمية احترافية.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="thesis" data-cat="study" href="order.html?service=thesis">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9.5L12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5v4.2c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.2M21.5 9.5v5"/></svg></span>
+          <span class="svc__txt"><strong>مذكرات التخرج</strong><span>إعداد مذكرات التخرج في كل التخصصات.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="internship" data-cat="study" href="order.html?service=internship">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5.5" y="5" width="13" height="15.5" rx="2"/><path d="M9 5v-.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V5M9 10.5h6M9 14h6M9 17.5h3.5"/></svg></span>
+          <span class="svc__txt"><strong>تقارير التربص</strong><span>إعداد تقارير التربص.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="software" data-cat="dev" href="order.html?service=software">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M7.5 9.5l3 2.5-3 2.5M12.5 15h4"/></svg></span>
+          <span class="svc__txt"><strong>برامج التخرج</strong><span>إنشاء برامج التخرج بكل لغات البرمجة.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="webapps" data-cat="dev" href="order.html?service=webapps">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M3.5 9h17M6.5 6.8h.01M9 6.8h.01M10.5 12.3l-2 2 2 2M13.5 12.3l2 2-2 2"/></svg></span>
+          <span class="svc__txt"><strong>تطبيقات الويب</strong><span>إنشاء تطبيقات الويب.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="install" data-cat="pc" href="order.html?service=install">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="11.5" rx="2"/><path d="M9 20h6M12 16v4M12 7v5.5M9.8 10.3l2.2 2.2 2.2-2.2"/></svg></span>
+          <span class="svc__txt"><strong>تثبيت الأنظمة والبرامج</strong><span>تثبيت أنظمة التشغيل والبرامج الخاصة بالحاسوب.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="repair" data-cat="pc" href="order.html?service=repair">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><rect x="10.2" y="10.2" width="3.6" height="3.6" rx=".6"/><path d="M10 3.5V7M14 3.5V7M10 17v3.5M14 17v3.5M3.5 10H7M3.5 14H7M17 10h3.5M17 14h3.5"/></svg></span>
+          <span class="svc__txt"><strong>صيانة الحواسيب</strong><span>صيانة الحواسيب وإصلاح أعطالها.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc" id="design" data-cat="design" href="order.html?service=design">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="8.8" cy="9.8" r="1.6"/><path d="M4 17l4.5-4 3.5 3 3-2.5 5 4.5"/></svg></span>
+          <span class="svc__txt"><strong>الإعلانات والملصقات والبطاقات</strong><span>تصميم الإعلانات والملصقات الإشهارية والبطاقات.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+        <a class="svc svc--other" id="other" data-cat="all" href="order.html?service=other">
+          <span class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3.5L5.5 13.5H12l-1 7 7.5-10H12z"/></svg></span>
+          <span class="svc__txt"><strong>خدمة غير موجودة في القائمة؟</strong><span>اطلبها واشرح لنا ما تحتاجه، وغالباً نستطيع تنفيذها.</span></span>
+          <span class="svc__go" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+        </a>
+    </div>
+  </div>
+</section>
 
-<dialog id="dMsg"><h3 style="margin-top:0">نص الرسالة</h3>
-  <p class="sub">المتغيرات المتاحة: {name} {level} {paid} {rest} {user}</p>
-  <textarea id="tpl" style="direction:rtl;font-family:inherit;font-size:15px;min-height:130px"></textarea>
-  <div class="foot"><button class="p" id="mSave">حفظ النص</button><button id="mClose">إغلاق</button></div></dialog>
+<section class="sec sec--ink" id="how">
+  <div class="wrap">
+    <div class="sec__head sec__head--light">
+      <h2>كيف تطلب خدمتك</h2>
+      <p class="lead">أربع خطوات، وكلها من هاتفك.</p>
+    </div>
+    <ol class="steps">
+        <li class="step"><span class="step__n">1</span><span class="step__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg></span><strong>اختر الخدمة</strong><p>من القائمة أو من التذكرة في أعلى الصفحة.</p></li>
+        <li class="step"><span class="step__n">2</span><span class="step__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3"/></svg></span><strong>املأ الاستمارة</strong><p>الاسم، الهاتف، العنوان ووصف طلبك.</p></li>
+        <li class="step"><span class="step__n">3</span><span class="step__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2.5 2.5 0 0 1-2.5 2.5A15 15 0 0 1 4 6a2.5 2.5 0 0 1 2.5-2.5z"/></svg></span><strong>نتصل بك</strong><p>نؤكد التفاصيل معك على رقم هاتفك.</p></li>
+        <li class="step"><span class="step__n">4</span><span class="step__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><strong>ننجز ونسلّم</strong><p>نتفق معك على طريقة التسليم عند الاتصال.</p></li>
+    </ol>
+    <p class="steps__note"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l7 2.5v5.5c0 4.2-3 7.5-7 9-4-1.5-7-4.8-7-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg><span>طلبك يصل إلينا مباشرة عبر الموقع. لا تكتب كلمات السر أو أرقام بطاقاتك في الاستمارة.</span></p>
+  </div>
+</section>
 
-<dialog id="dXml"><h3 style="margin-top:0">XML والنسخ الاحتياطي</h3>
-  <p class="sub">انسخ النص للاحتفاظ بنسخة، أو الصق/ارفع ملف XML ثم اضغط استيراد.</p>
-  <textarea id="xml" spellcheck="false"></textarea>
-  <div class="foot">
-    <button class="p" id="xCopy">نسخ</button>
-    <button id="xRefresh">تحديث من البيانات</button>
-    <button id="xImport">استيراد (يستبدل الحالي)</button>
-    <button id="xCsv">نسخ CSV</button>
-    <input type="file" id="xFile" accept=".xml,text/xml">
-    <button id="xClose">إغلاق</button>
-  </div></dialog>
+<section class="sec" id="faq">
+  <div class="wrap faq">
+    <div class="sec__head ">
+      <h2>أسئلة قبل أن تطلب</h2>
+    </div>
+    <div class="faq__list">
+        <details class="faq__item" open>
+          <summary><span>كيف أطلب خدمة؟</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p>اختر الخدمة، ثم املأ الاستمارة باسمك ورقم هاتفك وعنوانك ووصف ما تريده. يصلنا الطلب مباشرة، ونتصل بك لنؤكد التفاصيل.</p>
+        </details>
+        <details class="faq__item">
+          <summary><span>هل أستطيع الطلب خارج أوقات المحل؟</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p>نعم. الاستمارة تستقبل الطلبات في أي ساعة من الليل أو النهار، ونعالجها عند فتح المحل من 8:00 صباحاً إلى 4:00 مساءً.</p>
+        </details>
+        <details class="faq__item">
+          <summary><span>كيف أعرف أن طلبي وصل؟</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p>بعد الإرسال تظهر لك بطاقة تأكيد فيها رقم طلبك. احتفظ به، وانتظر اتصالنا على الرقم الذي كتبته.</p>
+        </details>
+        <details class="faq__item">
+          <summary><span>ماذا أكتب في وصف الطلب؟</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p>اكتب ما تريده بالتفصيل: الموضوع، المستوى أو الحجم، وآخر أجل إن وجد. عند اختيارك الخدمة يظهر فوق خانة الوصف تنبيه بالمعلومات التي تفيدنا.</p>
+        </details>
+        <details class="faq__item">
+          <summary><span>هل يمكنني التواصل دون ملء الاستمارة؟</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p>نعم، للاستفسار فقط. اتصل بنا على الهاتف أو راسلنا على الواتساب، ولتسجيل طلبك رسمياً استعمل الاستمارة.</p>
+        </details>
+    </div>
+  </div>
+</section>
 
-<script>
-/* ===== إعداد الحقول: أضف حقلا جديدا هنا فيظهر تلقائيا في الجدول والنموذج وXML ===== */
-const FIELDS=[
- {k:'name',l:'الاسم و اللقب'},
- {k:'user',l:'اسم المستخدم'},
- {k:'pass',l:'كلمة المرور'},
- {k:'paid',l:'الدفع',num:1},
- {k:'rest',l:'الباقي',num:1},
- {k:'phone',l:'رقم الهاتف',phone:1},
- {k:'level',l:'المستوى'},
- {k:'type',l:'النوع',opts:['جديد','سابق']},
- {k:'status',l:'الحالة',opts:['','مؤكد']},
- {k:'cert',l:'شهادة التسجيل',opts:['','تم التسليم']},
- {k:'mark',l:'علامة الهاتف',opts:['','أخضر','أصفر']}
-];
-const KEY='stu.v1',TKEY='stu.tpl',CC='213';
-const DEF_TPL='السلام عليكم {name}، نذكركم بخصوص تسجيل مستوى {level}. المبلغ المتبقي: {rest} دج. شكرا لكم.';
-const SEED=`حمزاوي كنزه|kenzakenza2001|2500|0|793231463|أولى ثانوي|جديد|||
-بن ناجي عبد الحق|hkymbnajy50|2500|0|660265064|أولى متوسط 104|جديد|مؤكد||أخضر
-مكرسي سيف الدين|ssifsifou100|2500|0|770952997|ثانية ثانوي آداب و فلسفة 212|سابق|مؤكد||
-بوعون شهرزاد|chahrachahra2002|2500|0|668374588|رابعة متوسط 404|سابق|مؤكد|تم التسليم|
-حراث هناء|harathhana2010|2500|0|552724997|أولى متوسط 104|جديد|مؤكد||أخضر
-مساعدية أيمن عبد الرؤوف|messmess2010|2500|0|696921837|ثالثة متوسط|جديد|||أخضر
-صيد اسلام|islamwxw2006|2500|0|670118148|أولى ثانوي|جديد|||أصفر
-توام مفيدة|mouvida2001|2500|0|672426965|أولى ثانوي|سابق|مؤكد||
-بلواعر عمر|omraomar2009|2500|0|668659830|أولى ثانوي|جديد|||أصفر
-غندوس معتز بالله|ghandous2008|2500|0|671231260|ثانية متوسط|سابق|مؤكد||
-شعبان آدم عبد الجليل|chaaban2010|2500|0|795742665|ثالثة متوسط|جديد|||أخضر
-عجرودي عبد الله|adjroudi2012|2500|0|791497585|ثالثة متوسط|جديد|||أخضر
-بن عبيد سيف الدين|sifoubenabid6|2000|500|655013038|ثالثة متوسط|سابق|مؤكد||
-سعدي نوره|nouranoura1994|2500|0|666855298|ثالثة متوسط|سابق|مؤكد||
-قابسي نوره|gabsinoura|2500|0|666739994|ثالثة ثانوي اداب و فلسفة|سابق|مؤكد||
-رشاشي فيروز|rechachi1979|2500|0|672109193-0771693256|ثانية ثانوي آداب و فلسفة 212|سابق|||
-وادي رميساء|ouadiwxw2010|2500|0|698986355|السنة الثانية متوسط|جديد|||أصفر
-بوعرعور أيوب|ayoubwxw2008|2500|0|662442384|السنة الثالثة متوسط|جديد|||أصفر
-ذيب إسلام|dibdib2008|2500|0|0696091330-0667744866|أولى ثانوي اداب|جديد|||أصفر
-نزار وسيم|wassimwxw2006|0|2500|652204031|أولى ثانوي م اداب|سابق|||
-منزر الياس|ademmnzerwxw2007|0|2500|661052450|أولى ثانوي م اداب|سابق|||
-مدور السعيد|saidmeddour1979|2500|0|658448627|ثانية ثانوي علوم تجريبية 2|سابق|||
-خلوط مريم|khalout1989|2500|0|664823753|ثانية ثانوي علوم تجريبية 2|سابق|||
-عابدي صفاء|safasafa2008dz|2500|0|665883045|أولى ثانوي م اداب|سابق|||
-ميروكي آية|ayaaya2009dz|500|2000|656462669|ثالثة متوسط|جديد|||أخضر
-بوجلال ملاك|malakmalak2011dz|400|2100|664299576|أولى متوسط 104|جديد|مؤكد|تم التسليم|`;
+<section class="sec sec--last" id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div class="contact__main">
+        <h2>جاهز؟ ابدأ طلبك الآن</h2>
+        <p>املأ الاستمارة في دقيقة، أو تواصل معنا إن كان عندك سؤال قبل الطلب.</p>
+        <div class="actions">
+          <a class="btn btn--cta btn--lg" href="order.html">اطلب خدمة<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+        </div>
+      </div>
+      <ul class="contact__list">
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2.5 2.5 0 0 1-2.5 2.5A15 15 0 0 1 4 6a2.5 2.5 0 0 1 2.5-2.5z"/></svg><span><small>الهاتف</small><a href="tel:+213654432520"><span class="ltr">06 54 43 25 20</span></a></span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a8 8 0 0 0-6.9 12L4 20l4.1-1.1A8 8 0 1 0 12 4z"/></svg><span><small>واتساب (للتواصل والاستفسار)</small><a href="https://wa.me/213654432520" target="_blank" rel="noopener">راسلنا على الواتساب</a></span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg><span><small>العنوان</small>بلدية قايس، ولاية خنشلة، مقابل متوسطة عروج «الإخوة ريحاني»</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span><small>أوقات المحل</small>من 8:00 صباحاً إلى 4:00 مساءً</span></li>
+        <li id="mapLink" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5l1.5-5h13l1.5 5M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0M5.5 12v7.5h13V12M10 19.5v-4h4v4"/></svg><span><small>الموقع على الخريطة</small><a href="#" target="_blank" rel="noopener">افتح الخريطة</a></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
 
-let rows=[],editId=null,sortK=null,sortDir=1;
-const $=id=>document.getElementById(id);
-const store={
- get(k){try{return localStorage.getItem(k)}catch(e){return null}},
- set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-};
-function seed(){return SEED.split('\n').map((ln,i)=>{
- const a=ln.split('|');const r={id:i+1,name:a[0],user:a[1],pass:i===13?'Kias@2006':'Kais@2006',paid:+a[2],rest:+a[3],phone:a[4],level:a[5],type:a[6],status:a[7]||'',cert:a[8]||'',mark:a[9]||''};return r})}
-function load(){let d=store.get(KEY);try{rows=d?JSON.parse(d):seed()}catch(e){rows=seed()}if(!Array.isArray(rows))rows=seed();rows.forEach(norm)}
-function save(){store.set(KEY,JSON.stringify(rows))}
-const tpl=()=>store.get(TKEY)||DEF_TPL;
-
-/* ===== الجدول ===== */
-function buildHead(){
- const th=['<th>الرقم</th>'].concat(FIELDS.map(f=>`<th data-k="${f.k}">${f.l}${sortK===f.k?(sortDir>0?' ▲':' ▼'):''}</th>`),['<th style="cursor:default">إجراءات</th>']);
- $('thr').innerHTML=th.join('');
- $('thr').querySelectorAll('th[data-k]').forEach(t=>t.onclick=()=>{const k=t.dataset.k;sortDir=sortK===k?-sortDir:1;sortK=k;render()});
-}
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function filtered(){
- const q=$('q').value.trim().toLowerCase(),t=$('fType').value,s=$('fStatus').value,d=$('fDebt').value;
- let r=rows.filter(x=>(!q||[x.name,x.user,x.phone,x.level].join(' ').toLowerCase().includes(q))
-  &&(!t||x.type===t)&&(!s||(s==='__none'?!x.status:x.status===s))&&(!d||(d==='debt'?x.rest>0:x.rest<=0)));
- if(sortK)r=[...r].sort((a,b)=>(a[sortK]>b[sortK]?1:a[sortK]<b[sortK]?-1:0)*sortDir);
- return r;
-}
-function render(){
- buildHead();const r=filtered();
- $('tb').innerHTML=r.map((x,i)=>`<tr><td class="n">${x.id}</td>`+FIELDS.map(f=>{
-  let v=esc(x[f.k]),c='';
-  if(f.k==='phone'&&x.mark)c=x.mark==='أخضر'?' class="ok"':' class="wr"';
-  if(f.k==='rest'&&x.rest>0)c=' class="debt"';
-  if(f.k==='mark')v='';
-  return `<td${c}>${v}</td>`}).join('')+
-  `${extraCells(x)}<td class="act"><button class="s p" data-a="pf" data-id="${x.id}">إجراءات المتعلم</button> <button class="s" data-a="wa" data-id="${x.id}">واتساب</button> <button class="s" data-a="ed" data-id="${x.id}">تعديل</button> <button class="s" data-a="del" data-id="${x.id}">حذف</button></td></tr>`).join('');
- $('empty').hidden=r.length>0;
- $('sCount').textContent=rows.length;
- $('sPaid').textContent=rows.reduce((a,x)=>a+(+x.paid||0),0).toLocaleString('en');
- $('sRest').textContent=rows.reduce((a,x)=>a+(+x.rest||0),0).toLocaleString('en');
- $('sDebt').textContent=rows.filter(x=>x.rest>0).length;
- $('sLog').textContent=rows.reduce((a,x)=>a+x.logins.length,0);
- $('sOk').textContent=rows.filter(x=>x.decision==='مقبول').length;
- $('sRep').textContent=rows.filter(x=>x.decision==='معيد').length;
-}
-$('tb').onclick=e=>{
- const b=e.target.closest('button');if(!b)return;
- const x=rows.find(r=>r.id==b.dataset.id);if(!x)return;
- if(b.dataset.a==='ed')openForm(x);
- if(b.dataset.a==='del'&&confirm('حذف '+x.name+'؟')){rows=rows.filter(r=>r!==x);save();render()}
- if(b.dataset.a==='wa')sendWA(x);
- if(b.dataset.a==='pf')openProfile(x);
- if(b.dataset.a==='op')openDoc(x,b.dataset.d);
- if(b.dataset.a==='lg'){x.logins.push(new Date().toISOString());save();render()}
-};
-
-/* ===== المراسلة ===== */
-function waNumber(p){
- let n=String(p||'').split(/[-/،,]/)[0].replace(/\D/g,'');
- if(!n)return '';if(n.startsWith('00'))n=n.slice(2);
- else if(n.startsWith('0'))n=CC+n.slice(1);
- else if(n.length<=9)n=CC+n;
- return n;
-}
-function msgFor(x){return tpl().replace(/\{(\w+)\}/g,(m,k)=>x[k]!==undefined?x[k]:m)}
-function sendWA(x){
- const n=waNumber(x.phone);
- if(!n){alert('لا يوجد رقم هاتف صالح لهذا المسجل.');return}
- window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msgFor(x)),'_blank','noopener');
-}
-$('bMsg').onclick=()=>{$('tpl').value=tpl();$('dMsg').showModal()};
-$('mSave').onclick=()=>{store.set(TKEY,$('tpl').value||DEF_TPL);$('dMsg').close()};
-$('mClose').onclick=()=>$('dMsg').close();
-
-/* ===== النموذج ===== */
-function openForm(x){
- editId=x?x.id:null;$('dTitle').textContent=x?'تعديل بيانات المسجل':'إضافة مسجل جديد';
- $('fGrid').innerHTML=FIELDS.map(f=>{
-  const v=x?x[f.k]:(f.k==='pass'?'Kais@2006':f.num?0:(f.k==='type'?'جديد':''));
-  const inp=f.opts?`<select name="${f.k}">${f.opts.map(o=>`<option${o===v?' selected':''}>${o}</option>`).join('')}</select>`
-   :`<input name="${f.k}" value="${esc(v)}"${f.num?' type="number" min="0"':''}>`;
-  return `<label class="${f.k==='name'||f.k==='level'||f.k==='phone'?'full':''}">${f.l}${inp}</label>`}).join('');
- $('dForm').showModal();
-}
-$('bAdd').onclick=()=>openForm(null);
-$('fCancel').onclick=()=>$('dForm').close();
-$('fSave').onclick=()=>{
- const o={};$('fGrid').querySelectorAll('[name]').forEach(el=>{const f=FIELDS.find(f=>f.k===el.name);o[el.name]=f.num?(+el.value||0):el.value.trim()});
- if(!o.name){alert('أدخل الاسم و اللقب.');return}
- if(editId){Object.assign(rows.find(r=>r.id===editId),o)}
- else{o.id=Math.max(0,...rows.map(r=>r.id))+1;rows.push(o)}
- save();render();$('dForm').close();
-};
-
-/* ===== XML / CSV ===== */
-function toXml(){
- const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
- return '<?xml version="1.0" encoding="UTF-8"?>\n<students>\n'+rows.map(r=>'  <student id="'+r.id+'">\n'+FIELDS.map(f=>`    <${f.k}>${e(r[f.k])}</${f.k}>`).join('\n')+extraXml(r,e)+'\n  </student>').join('\n')+'\n</students>';
-}
-function fromXml(t){
- const d=new DOMParser().parseFromString(t,'application/xml');
- if(d.querySelector('parsererror'))throw new Error('ملف XML غير صالح');
- return [...d.getElementsByTagName('student')].map((n,i)=>{
-  const o={id:+n.getAttribute('id')||i+1};FIELDS.forEach(f=>{const el=n.getElementsByTagName(f.k)[0];const v=el?el.textContent:'';o[f.k]=f.num?(+v||0):v});extraFromXml(n,o);return o});
-}
-function toCsv(){
- const q=s=>'"'+String(s??'').replace(/"/g,'""')+'"';
- return [FIELDS.map(f=>q(f.l)).join(',')].concat(rows.map(r=>FIELDS.map(f=>q(r[f.k])).join(','))).join('\n');
-}
-async function copy(t,btn){
- try{await navigator.clipboard.writeText(t)}catch(e){$('xml').value=t;$('xml').select();document.execCommand('copy')}
- const o=btn.textContent;btn.textContent='تم النسخ';setTimeout(()=>btn.textContent=o,1400);
-}
-$('bXml').onclick=()=>{$('xml').value=toXml();$('dXml').showModal()};
-$('xRefresh').onclick=()=>$('xml').value=toXml();
-$('xCopy').onclick=e=>copy($('xml').value,e.target);
-$('xCsv').onclick=e=>copy(toCsv(),e.target);
-$('xClose').onclick=()=>$('dXml').close();
-$('xImport').onclick=()=>{
- try{const r=fromXml($('xml').value);if(!r.length)throw new Error('لا توجد بيانات داخل الملف');
-  if(!confirm('سيتم استبدال '+rows.length+' سجل بـ '+r.length+' سجل. متابعة؟'))return;
-  rows=r;save();render();$('dXml').close()}catch(err){alert(err.message)}
-};
-$('xFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{$('xml').value=rd.result};rd.readAsText(f,'UTF-8')};
-
-/* ===== الإجراءات العشرة: دخول، تقويم ذاتي، فرض إلكتروني، استدعاء، نهاية الموسم، قرار، شهادة ===== */
-const S0={inst:'اسم المؤسسة',season:'2025/2026',director:'المدير',examPlace:'',examDate:'',pass:10,sum:'يُستدعى المتعلم(ة) المذكور(ة) أعلاه للحضور إلى {place} يوم {date} لاجتياز الفرض الإلكتروني، مع إحضار هذه الورقة ووثيقة إثبات الهوية.'};
-let S=Object.assign({},S0);try{Object.assign(S,JSON.parse(store.get('stu.set')||'{}'))}catch(e){}
-const LINKS=[['f1','تحميل فرض التقويم الذاتي الأول'],['c1','تحميل تصحيح فرض التقويم الذاتي الأول'],['f2','تحميل فرض التقويم الذاتي الثاني'],['c2','تحميل تصحيح فرض التقويم الذاتي الثاني']];
-function norm(r){r.logins=r.logins||[];r.dl=Object.assign({f1:'',c1:'',f2:'',c2:''},r.dl);if(!r.exam||r.exam.length!==6)r.exam=Array.from({length:6},()=>({n:'',m:''}));['summons','endDate','decision','certDate'].forEach(k=>r[k]=r[k]||'');return r}
-function calc(r){const m=r.exam.map((x,i)=>({i,v:x.m===''||x.m==null?NaN:+x.m})).filter(x=>!isNaN(x.v)).sort((a,b)=>b.v-a.v),t=m.slice(0,4);return{best:t.map(x=>x.i),avg:m.length>=4?t.reduce((a,x)=>a+x.v,0)/4:null}}
-const f2=v=>v===null?'—':v.toFixed(2);
-const fd=d=>d?d.split('-').reverse().join('/'):'';
-const fdt=i=>{const d=new Date(i);return isNaN(d)?i:d.toLocaleString('en-GB',{dateStyle:'short',timeStyle:'short'})};
-const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
-const tg=ok=>ok?'<span class="tag g">✓</span>':'<span class="tag">—</span>';
-function extraCells(x){return `<td>${x.logins.length} <button class="s" data-a="lg" data-id="${x.id}" title="تسجيل دخول الآن">+</button></td>`+['f1','c1','f2','c2'].map(k=>`<td>${tg(x.dl[k])}</td>`).join('')+`<td><b>${f2(calc(x).avg)}</b></td><td>${x.decision?`<span class="tag ${x.decision==='مقبول'?'g':'r'}">${x.decision}</span>`:'—'}</td>`}
-
-let cur=null;const P=()=>rows.find(r=>r.id===cur);
-function setP(r,p,v){const k=p.split('.');let o=r;for(let i=0;i<k.length-1;i++)o=o[k[i]];o[k[k.length-1]]=v}
-function openProfile(x){cur=x.id;drawPf();$('dPf').showModal()}
-function drawPf(){const r=P(),c=calc(r),n=r.logins.length;
- $('pfBody').innerHTML=`<div class="pf">
- <div class="sec"><b>${esc(r.name)}</b> — ${esc(r.level)} — ${esc(r.type)} — <span dir="ltr">${esc(r.phone)}</span></div>
- <div class="sec"><h4>1. الدخول الدوري لمنصة المعلام <span class="tag g">${n} مرة</span></h4>
-  <div class="row"><button class="p" data-pa="login">تسجيل دخول الآن</button><input type="datetime-local" id="lgDt"><button data-pa="loginAt">إضافة بهذا التاريخ والوقت</button></div>
-  <div class="row" style="max-height:110px;overflow:auto">${n?r.logins.map((l,i)=>`<span class="tag">${fdt(l)} <button class="s" data-pa="dellg" data-i="${i}" title="حذف">×</button></span>`).reverse().join(' '):'<span style="color:var(--mut)">لا توجد دخولات مسجلة.</span>'}</div></div>
- <div class="sec"><h4>التقويم الذاتي (تاريخ التحميل)</h4>${LINKS.map((l,i)=>`<div class="row"><span class="lb">${i+2}. ${l[1]}</span><input type="date" data-p="dl.${l[0]}" value="${r.dl[l[0]]}"><button class="s" data-pa="today" data-k="dl.${l[0]}">اليوم</button></div>`).join('')}</div>
- <div class="sec"><h4>6. الفرض الإلكتروني: ست مواد وتُحتسب أفضل أربع علامات</h4>
-  <table class="mt"><tr><th>#</th><th>المادة</th><th>العلامة /20</th></tr>${r.exam.map((x,i)=>`<tr id="mr${i}" class="${c.best.includes(i)?'best':''}"><td>${i+1}</td><td><input data-p="exam.${i}.n" value="${esc(x.n)}" placeholder="اسم المادة"></td><td><input type="number" min="0" max="20" step="0.25" data-p="exam.${i}.m" value="${esc(x.m)}"></td></tr>`).join('')}</table>
-  <div class="row">معدل الفرض الإلكتروني: <b id="avgV">${f2(c.avg)}</b><button data-pa="pResult">طباعة كشف النتيجة</button></div></div>
- <div class="sec"><h4>8. نهاية الموسم الدراسي</h4><div class="row"><input type="date" data-p="endDate" value="${r.endDate}"><button class="s" data-pa="today" data-k="endDate">اليوم</button></div></div>
- <div class="sec"><h4>9. القرار: مقبول أو معيد</h4><div class="row"><select data-p="decision"><option value="">غير محدد</option><option${r.decision==='مقبول'?' selected':''}>مقبول</option><option${r.decision==='معيد'?' selected':''}>معيد</option></select><button class="s" data-pa="auto">حساب تلقائي (حد النجاح ${S.pass})</button><span>المعدل: <b id="avgV2">${f2(c.avg)}</b></span></div></div></div>`}
-$('pfBody').addEventListener('input',e=>{const p=e.target.dataset.p;if(!p)return;const r=P();setP(r,p,e.target.value);save();if(p.startsWith('exam')){const c=calc(r);r.exam.forEach((_,i)=>$('mr'+i).classList.toggle('best',c.best.includes(i)));$('avgV').textContent=$('avgV2').textContent=f2(c.avg)}render()});
-$('pfBody').onclick=e=>{const b=e.target.closest('[data-pa]');if(!b)return;const r=P(),a=b.dataset.pa;
- if(a==='login')r.logins.push(new Date().toISOString());
- else if(a==='loginAt'){const v=$('lgDt').value;if(!v)return alert('اختر التاريخ والوقت أولا.');r.logins.push(new Date(v).toISOString());r.logins.sort()}
- else if(a==='dellg')r.logins.splice(+b.dataset.i,1);
- else if(a==='today')setP(r,b.dataset.k,today());
- else if(a==='auto'){const c=calc(r);if(c.avg===null)return alert('أدخل أربع علامات على الأقل لحساب المعدل.');r.decision=c.avg>=S.pass?'مقبول':'معيد'}
- else{printDoc(r,a);return}
- save();drawPf();render()};
-$('pfClose').onclick=()=>$('dPf').close();
-
-const sign=()=>`<div style="display:flex;justify-content:space-between;margin-top:50px"><div>حُرّر بتاريخ: ${fd(today())}</div><div style="text-align:center">${esc(S.director)}<br><br>الختم والإمضاء</div></div>`;
-const head=t=>`<div style="text-align:center"><h2 style="margin:0">${esc(S.inst)}</h2><div>الموسم الدراسي: ${esc(S.season)}</div><h1 style="margin:14px 0;border:2px solid #000;display:inline-block;padding:6px 28px;font-size:24px">${t}</h1></div>`;
-function info(r){const a=[['الرقم',r.id],['الاسم و اللقب',r.name],['اسم المستخدم',r.user],['المستوى',r.level],['النوع',r.type],['رقم الهاتف',r.phone],['الحالة',r.status||'—'],['شهادة التسجيل',r.cert||'—'],['المدفوع',r.paid],['المتبقي',r.rest],['عدد دخولات المنصة',r.logins.length],['معدل الفرض',f2(calc(r).avg)]];
- let h='<table>';for(let i=0;i<a.length;i+=2)h+=`<tr><th>${a[i][0]}</th><td>${esc(a[i][1])}</td><th>${a[i+1][0]}</th><td>${esc(a[i+1][1])}</td></tr>`;return h+'</table>'}
-function printDoc(r,a){const c=calc(r);let h;
- if(a==='pResult')h=head('كشف نتيجة الفرض الإلكتروني')+'<h3>معلومات المتعلم</h3>'+info(r)+'<h3>العلامات</h3><table><tr><th>#</th><th>المادة</th><th>العلامة /20</th><th>ضمن أفضل 4</th></tr>'+r.exam.map((x,i)=>`<tr${c.best.includes(i)?' style="background:#e2e2e2;font-weight:700"':''}><td>${i+1}</td><td>${esc(x.n)||'&nbsp;'}</td><td>${esc(x.m)}</td><td>${c.best.includes(i)?'✓':''}</td></tr>`).join('')+`</table><p style="font-size:18px">معدل الفرض الإلكتروني (أفضل 4 علامات): <b>${f2(c.avg)} / 20</b></p>${r.decision?`<p>القرار: <b>${r.decision}</b></p>`:''}`+sign();
- else if(a==='pSum'){r.summons=today();h=head('استدعاء')+info(r)+`<p style="margin:26px 0;font-size:17px;line-height:2">${esc(S.sum).replace('{place}',esc(S.examPlace)||'................').replace('{date}',fd(S.examDate)||'................')}</p>`+sign()}
- else{r.certDate=today();h=head('شهادة إثبات المستوى')+`<p style="font-size:19px;line-height:2.4;margin:34px 0">يشهد مدير(ة) <b>${esc(S.inst)}</b> أن المتعلم(ة) <b>${esc(r.name)}</b> المسجل(ة) برقم <b>${r.id}</b> قد زاول(ت) دراسته(ا) بمستوى <b>${esc(r.level)}</b> خلال الموسم الدراسي <b>${esc(S.season)}</b>${r.endDate?`، وانتهى موسمه الدراسي بتاريخ <b>${fd(r.endDate)}</b>`:''}${r.decision?`، وكانت نتيجته: <b>${r.decision}</b> بمعدل <b>${f2(c.avg)} / 20</b>`:''}.</p><p>سُلّمت هذه الشهادة للمعني(ة) بالأمر لاستعمالها فيما يسمح به القانون.</p>`+sign()}
- save();render();$('prevBody').innerHTML=h;drawPf();$('dPrev').showModal()}
-$('pPrint').onclick=()=>{$('sheet').innerHTML='<div class="doc">'+$('prevBody').innerHTML+'</div>';window.print()};
-$('pClose').onclick=()=>$('dPrev').close();
-
-const SF=[['inst','اسم المؤسسة'],['season','الموسم الدراسي'],['director','اسم المدير (للتوقيع)'],['examPlace','مكان الفرض الإلكتروني'],['examDate','تاريخ الفرض الإلكتروني','date'],['pass','معدل النجاح','number'],['sum','نص الاستدعاء (المتغيران {place} و{date})','textarea']];
-$('bSet').onclick=()=>{$('setGrid').innerHTML=SF.map(([k,l,t])=>`<label class="${k==='sum'?'full':''}">${l}${t==='textarea'?`<textarea data-s="${k}" style="min-height:80px;direction:rtl;font-family:inherit;font-size:14px">${esc(S[k])}</textarea>`:`<input data-s="${k}" type="${t||'text'}" value="${esc(S[k])}">`}</label>`).join('');$('dSet').showModal()};
-$('sSave').onclick=()=>{$('setGrid').querySelectorAll('[data-s]').forEach(el=>S[el.dataset.s]=el.dataset.s==='pass'?(+el.value||10):el.value);store.set('stu.set',JSON.stringify(S));$('dSet').close();render()};
-$('sClose').onclick=()=>$('dSet').close();
-
-function extraXml(r,e){return `\n    <logins>${r.logins.map(l=>`<login>${e(l)}</login>`).join('')}</logins>\n    <downloads f1="${e(r.dl.f1)}" c1="${e(r.dl.c1)}" f2="${e(r.dl.f2)}" c2="${e(r.dl.c2)}"/>\n    <exam>${r.exam.map(x=>`<subject name="${e(x.n)}" mark="${e(x.m)}"/>`).join('')}</exam>\n    <season endDate="${e(r.endDate)}" decision="${e(r.decision)}" summons="${e(r.summons)}" certDate="${e(r.certDate)}"/>`}
-function extraFromXml(n,o){o.logins=[...n.getElementsByTagName('login')].map(x=>x.textContent);const d=n.getElementsByTagName('downloads')[0];o.dl={};['f1','c1','f2','c2'].forEach(k=>o.dl[k]=d?d.getAttribute(k)||'':'');o.exam=[...n.getElementsByTagName('subject')].map(s=>({n:s.getAttribute('name')||'',m:s.getAttribute('mark')||''}));const s=n.getElementsByTagName('season')[0];['endDate','decision','summons','certDate'].forEach(k=>o[k]=s?s.getAttribute(k)||'':'');norm(o)}
-
-/* ===== بطاقات المتعلمين 90×50 ملم، طباعة الكل دفعة واحدة ===== */
-Object.assign(S0,{fb:'CyberBenchaar Kais',tel1:'06.54.43.25.20',tel2:'06.98.03.73.79'});
-for(const k of ['fb','tel1','tel2'])if(!S[k])S[k]=S0[k];
-SF.push(['fb','اسم صفحة فايسبوك (للبطاقات)'],['tel1','هاتف البطاقة 1'],['tel2','هاتف البطاقة 2']);
-const bd=v=>`<bdi dir="ltr">${esc(v)}</bdi>`;
-const cardHtml=r=>`<div class="card"><div class="ch"><span>فايسبوك: ${bd(S.fb)}</span><b>N° ${r.id}</b></div><div class="cn">${esc(r.name)}</div><div class="cl">${esc(r.level)}</div><table class="ci"><tr><td>اسم المستخدم</td><td>${bd(r.user)}</td></tr><tr><td>كلمة المرور</td><td>${bd(r.pass)}</td></tr><tr><td>هاتف المتعلم</td><td>${bd(r.phone)}</td></tr></table><div class="cf">${bd(S.tel1)} &nbsp;|&nbsp; ${bd(S.tel2)}</div></div>`;
-function cardsHtml(){const l=$('cOnly').checked?filtered():rows;let h='';for(let i=0;i<l.length;i+=10)h+=`<div class="cards"${i+10<l.length?' style="break-after:page"':''}>${l.slice(i,i+10).map(cardHtml).join('')}</div>`;return h||'<p>لا توجد بطاقات.</p>'}
-$('bCards').onclick=()=>{$('cardsBody').innerHTML=cardsHtml();$('dCards').showModal()};
-$('cOnly').onchange=()=>$('cardsBody').innerHTML=cardsHtml();
-$('cPrint').onclick=()=>{$('sheet').innerHTML=$('cardsBody').innerHTML;window.print()};
-$('cClose').onclick=()=>$('dCards').close();
-
-/* ===== ملفات PDF: مجلدات بجانب البرنامج، واسم الملف = رقم المتعلم ===== */
-const DOCS=[['reg','شهادة التسجيل'],['sum','الاستدعاء'],['res','كشف النقاط'],['cert','شهادة المستوى']];
-const _norm=norm;norm=function(r){_norm(r);r.ds=Object.assign({reg:'',sum:'',res:'',cert:''},r.ds);return r};
-const FM={};let root=null;
-const idb=(m,k,v)=>new Promise((res,rej)=>{const o=indexedDB.open('stu-fs',1);o.onupgradeneeded=()=>o.result.createObjectStore('h');o.onsuccess=()=>{const s=o.result.transaction('h',m).objectStore('h'),q=m==='readonly'?s.get(k):s.put(v,k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)};o.onerror=()=>rej(o.error)});
-const fsMsg=t=>$('fsInfo').textContent=t;
-async function scan(){
- if(!root||(await root.queryPermission({mode:'read'}))!=='granted')return;
- const miss=[];
- for(const [d,l] of DOCS){FM[d]=new Map();try{const dir=await root.getDirectoryHandle(l);for await(const [n,h] of dir.entries()){const m=n.match(/^(\d+)\.pdf$/i);if(m&&h.kind==='file')FM[d].set(+m[1],h)}}catch(e){miss.push(l)}}
- fsMsg('كشف الملفات مفعّل — '+DOCS.map(([d,l])=>l+': '+FM[d].size+' ملف').join(' | ')+(miss.length?' — مجلدات غير موجودة: '+miss.join('، '):''));
- render();if($('dPf').open)drawPf();
-}
-const has=(r,d)=>FM[d]?FM[d].has(r.id):null;
-const can=(r,d)=>has(r,d)!==false&&(d!=='reg'||r.status==='مؤكد');
-async function openDoc(r,d){
- const h=FM[d]&&FM[d].get(r.id);
- const u=h?URL.createObjectURL(await h.getFile()):encodeURI(DOCS.find(x=>x[0]===d)[1]+'/'+r.id+'.pdf');
- window.open(u,'_blank');
- if(r.ds[d]!=='printed'){r.ds[d]='opened';save();render();if($('dPf').open)drawPf()}
-}
-const stTag=v=>v==='printed'?'<span class="tag g">تمت الطباعة</span>':v==='opened'?'<span class="tag" style="background:var(--warn)">تم الفتح</span>':'';
-const exTag=h=>h===null?'':h?'<span class="tag g">موجود</span>':'<span class="tag">لا يوجد</span>';
-function docCells(x){return DOCS.map(([d])=>`<td>${exTag(has(x,d))} ${stTag(x.ds[d])}<br><button class="s" data-a="op" data-d="${d}" data-id="${x.id}" ${can(x,d)?'':'disabled'}>فتح</button></td>`).join('')}
-extraCells=function(){return ''};
-function docSec(r){return '<div class="sec"><h4>الملفات (PDF) — اسم الملف: <bdi dir="ltr" style="unicode-bidi:isolate">'+r.id+'.pdf</bdi></h4>'+DOCS.map(([d,l])=>{const h=has(r,d),ok=can(r,d),v=r.ds[d];
- const why=h===false?'لا يوجد ملف <bdi dir="ltr">'+r.id+'.pdf</bdi> في مجلد «'+l+'»':(d==='reg'&&r.status!=='مؤكد'?'التسجيل غير مؤكد':'');
- return `<div class="row"><span class="lb"><b>${l}</b> ${exTag(h)}<br><small style="color:var(--mut)">${why}</small></span><select data-ds="${d}"><option value="">لم يُفتح</option><option value="opened"${v==='opened'?' selected':''}>تم الفتح</option><option value="printed"${v==='printed'?' selected':''}>تمت الطباعة</option></select><button class="s" data-pd="op" data-d="${d}" ${ok?'':'disabled'}>فتح الملف</button></div>`}).join('')+'</div>'}
-const _dp=drawPf;drawPf=function(){_dp();$('pfBody').firstElementChild.insertAdjacentHTML('beforeend',docSec(P()))};
-$('pfBody').addEventListener('change',e=>{const d=e.target.dataset.ds;if(!d)return;P().ds[d]=e.target.value;save();render();drawPf()});
-$('pfBody').addEventListener('click',e=>{const b=e.target.closest('[data-pd]');if(b)openDoc(P(),b.dataset.d)});
-const _ex=extraXml;extraXml=function(r,e){return _ex(r,e)+`\n    <docs ${DOCS.map(([k])=>k+'="'+e(r.ds[k])+'"').join(' ')}/>`};
-const _fx=extraFromXml;extraFromXml=function(n,o){_fx(n,o);const d=n.getElementsByTagName('docs')[0];o.ds={};DOCS.forEach(([k])=>o.ds[k]=d?d.getAttribute(k)||'':'')};
-$('bFolder').onclick=async()=>{
- if(!window.showDirectoryPicker)return alert('كشف الملفات يعمل على متصفح Chrome أو Edge فقط. أزرار «فتح» تبقى تعمل.');
- try{let h=root;if(h&&(await h.requestPermission({mode:'read'}))!=='granted')h=null;
-  if(!h){h=await showDirectoryPicker({id:'stu-root',mode:'read'});await idb('readwrite','root',h)}
-  root=h;await scan()}catch(e){if(e.name!=='AbortError')alert('تعذر التفعيل: '+e.message)}};
-window.addEventListener('focus',()=>{if(root)scan()});
-if(window.indexedDB)idb('readonly','root').then(async h=>{if(!h)return;root=h;if((await h.queryPermission({mode:'read'}))==='granted')scan();else fsMsg('اضغط «تفعيل كشف الملفات» لتأكيد الصلاحية على المجلد «'+h.name+'».')}).catch(()=>{});
-
-/* ===== اختيار المستوى: قائمة جاهزة + شعب قابلة للإضافة ===== */
-const YEARS=['أولى متوسط','ثانية متوسط','ثالثة متوسط','رابعة متوسط','أولى ثانوي','ثانية ثانوي','ثالثة ثانوي'];
-S0.branches=['آداب','علوم'];if(!Array.isArray(S.branches))S.branches=['آداب','علوم'];
-const _of=openForm;openForm=function(x){_of(x);enhanceLevel()};
-function enhanceLevel(){
- const inp=document.querySelector('#fGrid [name=level]'),lab=inp.closest('label'),v=inp.value;
- const y0=YEARS.find(y=>v.startsWith(y))||'',rest=v.slice(y0.length),b0=S.branches.find(b=>rest.includes(b))||'',c0=(rest.match(/\d+/)||[''])[0];
- lab.style.display='none';
- lab.insertAdjacentHTML('afterend',`<label>المستوى<select id="lvY"><option value="">— اختر المستوى —</option>${YEARS.map(y=>`<option${y===y0?' selected':''}>${y}</option>`).join('')}</select></label><label id="lvBw">الشعبة<select id="lvB"></select></label><label>القسم / الفوج (اختياري)<input id="lvC" value="${c0}"></label>`);
- const fillB=sel=>{$('lvB').innerHTML=S.branches.map(b=>`<option${b===sel?' selected':''}>${esc(b)}</option>`).join('')+'<option value="__new">+ إضافة شعبة جديدة…</option>'};
- fillB(b0);
- const upd=()=>{const y=$('lvY').value,sec=y.endsWith('ثانوي');$('lvBw').style.display=sec?'':'none';if(y)inp.value=[y,sec?$('lvB').value:'',$('lvC').value.trim()].filter(Boolean).join(' ')};
- $('lvB').onchange=()=>{if($('lvB').value==='__new'){const n=(prompt('اسم الشعبة الجديدة:')||'').trim();if(n&&!S.branches.includes(n)){S.branches.push(n);store.set('stu.set',JSON.stringify(S))}fillB(n||S.branches[0])}upd()};
- $('lvY').onchange=upd;$('lvC').oninput=upd;
- $('lvBw').style.display=y0.endsWith('ثانوي')?'':'none';
-}
-
-/* ===== النسخة المحمولة: حفظ وفتح ملف البيانات ===== */
-function pack(){return JSON.stringify({v:1,rows,S,tpl:tpl()},null,1)}
-function unpack(t){t=t.trim();const d=t[0]==='<'?{rows:fromXml(t)}:JSON.parse(t);if(!Array.isArray(d.rows))throw new Error('ملف غير صالح');return d}
-function applyData(d){rows=d.rows.map(norm);if(d.S){S=Object.assign({},S0,d.S);store.set('stu.set',JSON.stringify(S))}if(d.tpl)store.set(TKEY,d.tpl);save();render()}
-function dlFile(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
-$('bSaveF').onclick=()=>dlFile('students-'+today()+'.json',pack());
-$('bOpenF').onclick=()=>$('fOpen').click();
-$('fOpen').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const d=unpack(rd.result);if(confirm('سيتم استبدال البيانات الحالية بـ '+d.rows.length+' سجل. متابعة؟'))applyData(d)}catch(err){alert(err.message)}};rd.readAsText(f,'UTF-8');e.target.value=''};
-let fh=null;
-async function autoWrite(){if(!fh)return;try{const w=await fh.createWritable();await w.write(pack());await w.close()}catch(e){fh=null;$('bLink').textContent='ربط بملف (حفظ تلقائي)'}}
-const _save=save;save=function(){_save();autoWrite()};
-$('bLink').onclick=async()=>{
- if(!window.showSaveFilePicker){alert('متصفحك لا يدعم الحفظ التلقائي في ملف. استعمل Chrome أو Edge، أو زر «حفظ نسخة في ملف».');return}
- try{
-  if(confirm('هل لديك ملف بيانات سابق تريد متابعة العمل عليه؟\nموافق = اختيار ملف موجود\nإلغاء = إنشاء ملف جديد بالبيانات الحالية')){
-   const [h]=await showOpenFilePicker({types:[{description:'JSON',accept:{'application/json':['.json']}}]});
-   const d=unpack(await (await h.getFile()).text());applyData(d);fh=h;
-  }else{
-   fh=await showSaveFilePicker({suggestedName:'students-data.json',types:[{description:'JSON',accept:{'application/json':['.json']}}]});
-  }
-  await autoWrite();if(fh)$('bLink').textContent='مرتبط: '+fh.name;
- }catch(e){if(e.name!=='AbortError')alert('تعذر الربط: '+e.message)}};
-
-/* ===== فلاتر وثيم ===== */
-['q','fType','fStatus','fDebt'].forEach(id=>$(id).oninput=render);
-$('bTheme').onclick=()=>{
- const el=document.documentElement,dark=el.dataset.theme==='dark'||(!el.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);
- el.dataset.theme=dark?'light':'dark';
-};
-FIELDS.find(f=>f.k==='type').opts.forEach(o=>$('fType').insertAdjacentHTML('beforeend',`<option>${o}</option>`));
-load();render();
-</script>
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div class="foot__about">
+      <a class="brand" href="index.html" aria-label="Cyber Tech، الصفحة الرئيسية"><span class="brand__mark"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path class="m1" d="M12 13.500l7.500 6.500-7.500 6.500"/><path class="m2" d="M22.500 27.500h6.500"/></svg></span><span class="brand__name">Cyber<b>Tech</b></span></a>
+      <p>مقهى إنترنت وخدمات رقمية في قايس، ولاية خنشلة.</p>
+    </div>
+    <div>
+      <h2>الموقع</h2>
+      <ul>
+        <li><a href="order.html">اطلب خدمة</a></li>
+        <li><a href="index.html#services">الخدمات</a></li>
+        <li><a href="index.html#how">كيف نعمل</a></li>
+        <li><a href="index.html#faq">الأسئلة الشائعة</a></li>
+        <li><a href="index.html#contact">اتصل بنا</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>المحل</h2>
+      <ul class="foot__facts">
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg><span>بلدية قايس، ولاية خنشلة، مقابل متوسطة عروج «الإخوة ريحاني»</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>من 8:00 صباحاً إلى 4:00 مساءً</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2.5 2.5 0 0 1-2.5 2.5A15 15 0 0 1 4 6a2.5 2.5 0 0 1 2.5-2.5z"/></svg><a href="tel:+213654432520"><span class="ltr">06 54 43 25 20</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot__base"><span>© 2026 Cyber Tech</span><span>استقبال الطلبات عبر الموقع على مدار الساعة</span></div>
+</footer>
+<script src="js/config.js" defer></script>
+<script src="js/util.js" defer></script>
+<script src="js/gfx.js" defer></script>
+<script src="js/store.js" defer></script>
+<script src="js/site.js" defer></script>
 </body>
 </html>

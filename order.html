@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اطلب خدمة | Cyber Tech قايس</title>
+<meta name="description" content="اطلب خدمتك من Cyber Tech في أي وقت: املأ الاستمارة باسمك ورقمك وعنوانك ووصف الطلب.">
+<meta property="og:title" content="اطلب خدمة | Cyber Tech قايس">
+<meta property="og:description" content="اطلب خدمتك من Cyber Tech في أي وقت: املأ الاستمارة باسمك ورقمك وعنوانك ووصف الطلب.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_DZ">
+<meta name="theme-color" content="#0B2624">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="order">
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+<div class="notice" id="notice" hidden></div>
+<header class="top" id="top">
+  <div class="wrap">
+    <div class="pillbar">
+      <a class="brand" href="index.html" aria-label="Cyber Tech، الصفحة الرئيسية"><span class="brand__mark"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path class="m1" d="M12 13.500l7.500 6.500-7.500 6.500"/><path class="m2" d="M22.500 27.500h6.500"/></svg></span><span class="brand__name">Cyber<b>Tech</b></span></a>
+      <nav class="nav" id="nav" aria-label="القائمة الرئيسية">
+        <div class="dd" id="dd">
+          <button class="nav__link dd__btn" id="ddBtn" type="button" aria-expanded="false" aria-controls="ddPanel">الخدمات<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="dd__panel" id="ddPanel">
+          <a class="dd__item" data-cat="digital" data-filter="digital" href="index.html?cat=digital#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.6 2.6 14.4 0 17M12 3.5c-2.6 2.6-2.6 14.4 0 17"/></svg></span>
+            <span><strong>التسجيلات والخدمات الرقمية</strong><small>تسجيلات، تحميلات واستشارات</small></span>
+          </a>
+          <a class="dd__item" data-cat="study" data-filter="study" href="index.html?cat=study#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg></span>
+            <span><strong>الدراسة والبحوث</strong><small>بحوث، عروض، مذكرات وتقارير</small></span>
+          </a>
+          <a class="dd__item" data-cat="dev" data-filter="dev" href="index.html?cat=dev#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7.5L4 12l4.5 4.5M15.5 7.5L20 12l-4.5 4.5M13.5 5l-3 14"/></svg></span>
+            <span><strong>البرمجة والويب</strong><small>برامج التخرج وتطبيقات الويب</small></span>
+          </a>
+          <a class="dd__item" data-cat="pc" data-filter="pc" href="index.html?cat=pc#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="11.5" rx="2"/><path d="M9 20h6M12 16v4"/></svg></span>
+            <span><strong>الحاسوب</strong><small>تثبيت وصيانة الحواسيب</small></span>
+          </a>
+          <a class="dd__item" data-cat="design" data-filter="design" href="index.html?cat=design#services">
+            <span class="tile tile--sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3"/></svg></span>
+            <span><strong>التصميم</strong><small>إعلانات، ملصقات وبطاقات</small></span>
+          </a>
+            <a class="dd__all" href="index.html#services">كل الخدمات<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+          </div>
+        </div>
+        <a class="nav__link" href="index.html#how">كيف نعمل</a>
+        <a class="nav__link" href="index.html#faq">الأسئلة الشائعة</a>
+        <a class="nav__link" href="index.html#contact">اتصل بنا</a>
+        <div class="nav__foot">
+          <a class="btn btn--ghost" href="tel:+213654432520"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2.5 2.5 0 0 1-2.5 2.5A15 15 0 0 1 4 6a2.5 2.5 0 0 1 2.5-2.5z"/></svg>اتصال</a>
+          <a class="btn btn--wa" href="https://wa.me/213654432520" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a8 8 0 0 0-6.9 12L4 20l4.1-1.1A8 8 0 1 0 12 4z"/></svg>واتساب</a>
+        </div>
+      </nav>
+      <div class="pillbar__tools">
+        <a class="btn btn--cta btn--sm" href="order.html">اطلب خدمة</a>
+        <button class="iconbtn menu-btn" id="menuBtn" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="pagehead">
+  <div class="wrap">
+    <h1>اطلب خدمتك</h1>
+    <p class="lead">املأ الاستمارة وسنتصل بك لتأكيد الطلب. الاستمارة مفتوحة في أي وقت، ليلاً أو نهاراً.</p>
+  </div>
+</section>
+
+<section class="sec sec--tight">
+  <div class="wrap order">
+    <div class="order__main">
+      <div class="callout callout--off" id="offNote" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3.5L5.5 13.5H12l-1 7 7.5-10H12z"/></svg><div><strong>استقبال الطلبات عبر الموقع غير مفعّل بعد.</strong><p>يمكنك الآن الاتصال بنا على <span class="ltr">06 54 43 25 20</span> أو مراسلتنا على الواتساب وسنسجل طلبك.</p></div></div>
+      <div class="callout callout--preview" id="previewNote" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l7 2.5v5.5c0 4.2-3 7.5-7 9-4-1.5-7-4.8-7-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg><div><strong>وضع المعاينة.</strong><p>الطلبات تُحفظ في هذا المتصفح فقط ولا تصل إلى لوحة التحكم. اربط قاعدة البيانات لتصلك طلبات الزبائن.</p></div></div>
+      <form class="formcard" id="orderForm" novalidate>
+        <div class="field">
+          <label for="f-service">الخدمة المطلوبة</label>
+          <select id="f-service" name="service" required aria-describedby="e-service">
+              <option value="" data-hint="">اختر الخدمة…</option>
+              <optgroup label="التسجيلات والخدمات الرقمية">
+                <option value="registrations" data-hint="اذكر: اسم المنصة أو الموقع، ونوع التسجيل المطلوب.">التسجيلات الرقمية</option>
+                <option value="distance" data-hint="اذكر: المستوى الذي تريد التسجيل فيه، وآخر مستوى دراسي وصلت إليه.">حجز الدراسة بالمراسلة</option>
+                <option value="downloads" data-hint="اذكر: ما تريد تحميله بالضبط: الاسم أو الرابط.">التحميلات</option>
+                <option value="consulting" data-hint="اذكر: موضوع الاستشارة.">استشارات رقمية</option>
+              </optgroup>
+              <optgroup label="الدراسة والبحوث">
+                <option value="research" data-hint="اذكر: موضوع البحث، الطور والسنة الدراسية، عدد الصفحات، وآخر أجل للتسليم.">البحوث لكل الأطوار</option>
+                <option value="presentations" data-hint="اذكر: موضوع العرض، عدد الشرائح التقريبي، وتاريخ التقديم.">العروض التقديمية</option>
+                <option value="thesis" data-hint="اذكر: التخصص، عنوان المذكرة، المستوى الدراسي، وآخر أجل للتسليم.">مذكرات التخرج</option>
+                <option value="internship" data-hint="اذكر: التخصص، مكان التربص ومدته، وآخر أجل للتسليم.">تقارير التربص</option>
+              </optgroup>
+              <optgroup label="البرمجة والويب">
+                <option value="software" data-hint="اذكر: وصف البرنامج المطلوب، لغة البرمجة إن كانت محددة، وآخر أجل للتسليم.">برامج التخرج</option>
+                <option value="webapps" data-hint="اذكر: فكرة التطبيق، وأهم الوظائف التي تريدها فيه.">تطبيقات الويب</option>
+              </optgroup>
+              <optgroup label="الحاسوب">
+                <option value="install" data-hint="اذكر: نوع الحاسوب، ونظام التشغيل أو البرامج التي تريد تثبيتها.">تثبيت الأنظمة والبرامج</option>
+                <option value="repair" data-hint="اذكر: نوع الحاسوب، ووصف العطل.">صيانة الحواسيب</option>
+              </optgroup>
+              <optgroup label="التصميم">
+                <option value="design" data-hint="اذكر: نوع التصميم (إعلان، ملصق أو بطاقة)، النص الذي يظهر فيه، والمقاس إن وجد.">الإعلانات والملصقات والبطاقات</option>
+              </optgroup>
+              <option value="other" data-hint="اشرح ما تحتاجه بالتفصيل.">خدمة أخرى</option>
+          </select>
+          <p class="field__err" id="e-service" hidden></p>
+        </div>
+
+        <div class="fieldrow">
+          <div class="field">
+            <label for="f-name">الاسم الكامل</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="e-name">
+            <p class="field__err" id="e-name" hidden></p>
+          </div>
+          <div class="field">
+            <label for="f-phone">رقم الهاتف</label>
+            <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" maxlength="20" required aria-describedby="e-phone">
+            <p class="field__err" id="e-phone" hidden></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-address">العنوان</label>
+          <input id="f-address" name="address" type="text" autocomplete="street-address" maxlength="200" required aria-describedby="e-address">
+          <p class="field__err" id="e-address" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="f-details">وصف الطلب</label>
+          <p class="hint" id="detailsHint" data-default="اشرح ما تريده بوضوح: كلما كان الوصف أدق كان التنفيذ أسرع.">اشرح ما تريده بوضوح: كلما كان الوصف أدق كان التنفيذ أسرع.</p>
+          <textarea id="f-details" name="details" rows="5" maxlength="2000" required aria-describedby="detailsHint e-details"></textarea>
+          <p class="field__err" id="e-details" hidden></p>
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label>اترك هذا الحقل فارغاً <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <button class="btn btn--cta btn--lg btn--block" type="submit" id="submitBtn">إرسال الطلب</button>
+        <p class="fine" id="submitNote"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg><span>نستعمل معلوماتك لمعالجة طلبك والاتصال بك فقط. لا تكتب كلمات السر أو أرقام بطاقاتك هنا.</span></p>
+      </form>
+      <div id="orderDone" hidden></div>
+    </div>
+
+    <aside class="order__side">
+      <div class="side">
+        <h2>ماذا يحدث بعد الإرسال؟</h2>
+        <ol class="mini">
+          <li><span>1</span>يصلنا طلبك مباشرة.</li>
+          <li><span>2</span>نتصل بك على رقم هاتفك لتأكيد التفاصيل.</li>
+          <li><span>3</span>ننجز العمل ونتفق معك على التسليم.</li>
+        </ol>
+      </div>
+      <div class="side">
+        <h2>للاستفسار فقط</h2>
+        <ul class="facts">
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2.5 2.5 0 0 1-2.5 2.5A15 15 0 0 1 4 6a2.5 2.5 0 0 1 2.5-2.5z"/></svg><a href="tel:+213654432520"><span class="ltr">06 54 43 25 20</span></a></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a8 8 0 0 0-6.9 12L4 20l4.1-1.1A8 8 0 1 0 12 4z"/></svg><a href="https://wa.me/213654432520" target="_blank" rel="noopener">واتساب</a></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>من 8:00 صباحاً إلى 4:00 مساءً</span></li>
+        </ul>
+        <p class="side__more">الطلبات التي تصل خارج أوقات العمل نعالجها عند فتح المحل.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div class="foot__about">
+      <a class="brand" href="index.html" aria-label="Cyber Tech، الصفحة الرئيسية"><span class="brand__mark"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path class="m1" d="M12 13.500l7.500 6.500-7.500 6.500"/><path class="m2" d="M22.500 27.500h6.500"/></svg></span><span class="brand__name">Cyber<b>Tech</b></span></a>
+      <p>مقهى إنترنت وخدمات رقمية في قايس، ولاية خنشلة.</p>
+    </div>
+    <div>
+      <h2>الموقع</h2>
+      <ul>
+        <li><a href="order.html">اطلب خدمة</a></li>
+        <li><a href="index.html#services">الخدمات</a></li>
+        <li><a href="index.html#how">كيف نعمل</a></li>
+        <li><a href="index.html#faq">الأسئلة الشائعة</a></li>
+        <li><a href="index.html#contact">اتصل بنا</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>المحل</h2>
+      <ul class="foot__facts">
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg><span>بلدية قايس، ولاية خنشلة، مقابل متوسطة عروج «الإخوة ريحاني»</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>من 8:00 صباحاً إلى 4:00 مساءً</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2.5 2.5 0 0 1-2.5 2.5A15 15 0 0 1 4 6a2.5 2.5 0 0 1 2.5-2.5z"/></svg><a href="tel:+213654432520"><span class="ltr">06 54 43 25 20</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot__base"><span>© 2026 Cyber Tech</span><span>استقبال الطلبات عبر الموقع على مدار الساعة</span></div>
+</footer>
+<script src="js/config.js" defer></script>
+<script src="js/util.js" defer></script>
+<script src="js/gfx.js" defer></script>
+<script src="js/store.js" defer></script>
+<script src="js/site.js" defer></script>
+<script src="js/order.js" defer></script>
+</body>
+</html>

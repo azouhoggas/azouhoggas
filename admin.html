@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لوحة التحكم | Cyber Tech</title>
+<meta name="description" content="لوحة التحكم الخاصة.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B2624">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin" data-page="admin">
+<div class="adm-boot" id="boot">جارٍ التحميل…</div>
+
+<main class="adm-login" id="loginView" hidden>
+  <div class="logincard">
+    <div class="adm-login__brand"><span class="brand"><span class="brand__mark"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path class="m1" d="M12 13.500l7.500 6.500-7.500 6.500"/><path class="m2" d="M22.500 27.500h6.500"/></svg></span><span class="brand__name">Cyber<b>Tech</b></span></span></div>
+    <h1 id="loginTitle">تسجيل الدخول</h1>
+    <p class="muted" id="loginIntro"></p>
+    <div class="callout callout--off" id="offBox" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3.5L5.5 13.5H12l-1 7 7.5-10H12z"/></svg><div><strong>قاعدة البيانات غير مربوطة بعد.</strong><p>افتح ملف <code>SETUP-GUIDE.html</code> واتبع الخطوات، ثم ضع القيم في <code>js/config.js</code>. بعدها تفتح هذه الصفحة بتسجيل الدخول.</p></div></div>
+    <form id="loginForm" novalidate>
+      <div class="field" id="emailField">
+        <label for="l-email">البريد الإلكتروني</label>
+        <input id="l-email" type="email" autocomplete="username" dir="ltr">
+      </div>
+      <div class="field">
+        <label for="l-pass">كلمة السر</label>
+        <input id="l-pass" type="password" autocomplete="current-password" dir="ltr">
+      </div>
+      <div class="field" id="pass2Field" hidden>
+        <label for="l-pass2">أعد كتابة كلمة السر</label>
+        <input id="l-pass2" type="password" autocomplete="new-password" dir="ltr">
+      </div>
+      <p class="field__err" id="loginError" role="alert" hidden></p>
+      <button class="btn btn--cta btn--block" type="submit" id="loginBtn">دخول</button>
+    </form>
+    <p class="fine fine--center" id="loginReset" hidden><button class="linkbtn" type="button" id="resetLocalBtn">نسيت كلمة السر التجريبية؟</button></p>
+  </div>
+  <p class="adm-login__back"><a class="more" href="index.html">العودة إلى الموقع<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a></p>
+</main>
+
+<div class="adm-shell" id="appView" hidden>
+  <aside class="adm-side">
+    <span class="brand"><span class="brand__mark"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path class="m1" d="M12 13.500l7.500 6.500-7.500 6.500"/><path class="m2" d="M22.500 27.500h6.500"/></svg></span><span class="brand__name">Cyber<b>Tech</b></span></span>
+    <nav class="adm-tabs" role="tablist" aria-label="أقسام اللوحة">
+      <button type="button" role="tab" id="tab-orders" aria-controls="panel-orders" aria-selected="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5l2.5-8h11l2.5 8M4 13.5V18a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 18v-4.5M4 13.5h4.5a3.5 3.5 0 0 0 7 0H20"/></svg><span>الطلبات</span><span class="count" id="newCount" hidden></span></button>
+      <button type="button" role="tab" id="tab-settings" aria-controls="panel-settings" aria-selected="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3.5v2.2M12 18.3v2.2M3.5 12h2.2M18.3 12h2.2M6 6l1.5 1.5M16.5 16.5L18 18M6 18l1.5-1.5M16.5 7.5L18 6"/></svg><span>الإعدادات</span></button>
+    </nav>
+    <div class="adm-side__foot">
+      <span class="adm-mode" id="modeBadge"></span>
+      <a class="adm-link" href="index.html" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6.5 8 6.5M6 9.8V19.5h12V9.8M10 19.5v-5h4v5"/></svg><span>عرض الموقع</span></a>
+      <button class="adm-link" type="button" id="logoutBtn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h3.5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H14M10 8l-4 4 4 4M6 12h9"/></svg><span>خروج</span></button>
+    </div>
+  </aside>
+
+  <div class="adm-content">
+    <div class="adm-banner" id="demoBanner" hidden>
+      <b>وضع المعاينة.</b> الطلبات المعروضة هنا من هذا المتصفح فقط. لتصلك طلبات الزبائن اتبع «دليل الإعداد» (ملف SETUP-GUIDE.html).
+    </div>
+
+    <main class="adm-main">
+      <section id="panel-orders" role="tabpanel" aria-labelledby="tab-orders">
+        <h1 class="adm-h1">الطلبات</h1>
+        <div class="kpis" id="filters" role="group" aria-label="تصفية حسب الحالة"></div>
+        <div class="adm-tools">
+          <label class="adm-search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="q" type="search" aria-label="بحث في الطلبات" placeholder="ابحث بالاسم، الهاتف أو رقم الطلب"></label>
+          <button class="btn btn--ghost" type="button" id="exportBtn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>تصدير إلى Excel</button>
+        </div>
+        <div class="adm-table">
+          <div class="adm-head" aria-hidden="true"><span>رقم الطلب</span><span>الزبون</span><span>الخدمة</span><span>التاريخ</span><span>الحالة</span></div>
+          <div class="adm-list" id="ordersList"></div>
+        </div>
+      </section>
+
+      <section id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
+        <h1 class="adm-h1">الإعدادات</h1>
+        <form class="adm-form" id="settingsForm" novalidate>
+          <div class="adm-card">
+            <h2>شريط الإعلان</h2>
+            <p class="muted">نص قصير يظهر أعلى صفحات الموقع، مثل إعلان عطلة أو خدمة جديدة. اتركه فارغاً لإخفاء الشريط.</p>
+            <div class="field"><label for="s-ann">نص الإعلان</label><textarea id="s-ann" name="announcement" rows="2" maxlength="200"></textarea></div>
+          </div>
+          <p class="adm-warn" id="settingsWarn" hidden><b>وضع المعاينة:</b> تُحفظ هذه الإعدادات في هذا المتصفح فقط ولا يراها الزبائن.</p>
+          <button class="btn btn--cta" type="submit" id="saveSettingsBtn">حفظ الإعدادات</button>
+        </form>
+      </section>
+    </main>
+  </div>
+</div>
+
+<dialog class="adm-dlg" id="orderDlg" aria-labelledby="dlgTitle"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/config.js" defer></script>
+<script src="js/util.js" defer></script>
+<script src="js/gfx.js" defer></script>
+<script src="js/store.js" defer></script>
+<script src="js/admin.js" defer></script>
+</body>
+</html>
